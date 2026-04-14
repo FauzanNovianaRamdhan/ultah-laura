@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Kamu ❤️</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b141a;
+  }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .header {
+    background: #202c33;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .chat {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bubble {
+    max-width: 80%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 12px;
+    font-size: 14px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .me {
+    background: #005c4b;
+    color: white;
+    align-self: flex-end;
+  }
+
+  .input-area {
+    padding: 10px;
+    background: #202c33;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    background: #25d366;
+    color: white;
+    font-size: 16px;
+  }
+
+  img {
+    width: 70%;
+    border-radius: 12px;
+    margin: 10px auto;
+    display: block;
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.95);}
+    to {opacity: 1; transform: scale(1);}
+  }
+
+  .heart {
+    position: fixed;
+    top: -10px;
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    to { transform: translateY(110vh); }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+  <!-- ✏️ GANTI NAMA DIA DI SINI -->
+  <div class="header">💖 Laura</div>
+
+  <div class="chat" id="chat"></div>
+
+  <div class="input-area">
+    <button onclick="nextMessage()">Buka Pesan 💌</button>
+  </div>
+</div>
+
+<!-- 🎵 LAGU LU -->
+<audio id="bgm" loop>
+  <source src="LANY - Prettiest Thing I've Ever Seen Official Lyric Video.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const messages = [
+  "Hai Laura 😊",
+  "Hari ini hari yang spesial banget...",
+  "Karena hari ini kamu lahir ke dunia 🎂",
+  "Happy Birthday ya ❤️",
+  "Semoga kamu selalu bahagia",
+  "Semoga semua yang kamu inginkan tercapai ✨",
+  "Hari ini harus jadi hari terbaik buat kamu",
+  "Once again...",
+  "Happy Birthday ❤️🎉"
+];
+
+let index = 0;
+
+function addMessage(text) {
+  const chat = document.getElementById("chat");
+  const bubble = document.createElement("div");
+
+  bubble.className = "bubble me";
+  chat.appendChild(bubble);
+
+  typeEffect(text, bubble);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function typeEffect(text, element, speed = 35) {
+  let i = 0;
+  element.innerHTML = "";
+  function typing() {
+    if (i < text.length) {
+      element.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
+    }
+  }
+  typing();
+}
+
+/* 📸 FOTO */
+function addImage(src) {
+  const chat = document.getElementById("chat");
+  const img = document.createElement("img");
+
+  img.src = src;
+  chat.appendChild(img);
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function nextMessage() {
+
+  // 🎵 PLAY LAGU PAS KLIK
+  document.getElementById("bgm").play();
+
+  if (index < messages.length) {
+
+    // 📸 FOTO MUNCUL DI SINI
+    if (index === 2) {
+      addImage("Laura.jpeg");
+    }
+
+    addMessage(messages[index]);
+    index++;
+
+  } else {
+    startHearts();
+  }
+}
+
+/* ❤️ HATI */
+function startHearts() {
+  for (let i = 0; i < 25; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+    document.body.appendChild(heart);
+  }
+}
+</script>
+
+</body>
+</html>
